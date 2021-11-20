@@ -7,11 +7,13 @@ import MealItem from "./MealItem/MealItem";
 const AvailableMeals = props =>{
 
   const [meals, setMeals] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const [httpError, setHttpError] = useState();
+  let errorMessage;
 
-  const fetchMealsHandler = async () => {
-    try {
-      const response = await fetch("https://react-food-order-app-f946a-default-rtdb.europe-west1.firebasedatabase.app/meals.json");
+  const fetchMeals = async () => {
+    // try {
+      const response = await fetch("https://react-food-order-app-f946a-default-rtdb.europe-west1.firebasedatabase.app/meals.jsons");
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
@@ -27,18 +29,31 @@ const AvailableMeals = props =>{
       }
       setMeals(loadedMeals);
       setIsLoading(false);
-    } catch(error) {
-      console.log(error.message);
-    }
+    // } catch(error) {
+    //   setHttpError(true);
+    //   setIsLoading(false);
+    //   console.log(error.message);
+    //   errorMessage = error.message;
+    // }
   }
 
   useEffect(()=>{
-    fetchMealsHandler();
+    fetchMeals().catch(error => {
+      setHttpError(error.message);
+      setIsLoading(false);
+    });
   }, []);
 
   if(isLoading) {
     return <section>
       <p>Is loading...</p>
+    </section>
+  }
+
+  if(httpError) {
+    console.log(errorMessage)
+    return <section>
+      <p>{httpError}</p>
     </section>
   }
 
