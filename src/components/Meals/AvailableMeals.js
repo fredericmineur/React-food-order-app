@@ -1,41 +1,13 @@
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import styles from './AvailableMeals.module.css';
 import Card from '../UI/Card.js';
 import MealItem from "./MealItem/MealItem";
-import { useState } from "react/cjs/react.development";
-
-// const DUMMY_MEALS = [
-//   {
-//     id: 'm1',
-//     name: 'Sushi',
-//     description: 'Finest fish and veggies',
-//     price: 22.99,
-//   },
-//   {
-//     id: 'm2',
-//     name: 'Schnitzel',
-//     description: 'A german specialty!',
-//     price: 16.5,
-//   },
-//   {
-//     id: 'm3',
-//     name: 'Barbecue Burger',
-//     description: 'American, raw, meaty',
-//     price: 12.99,
-//   },
-//   {
-//     id: 'm4',
-//     name: 'Green Bowl',
-//     description: 'Healthy...and green...',
-//     price: 18.99,
-//   },
-// ];
-
 
 
 const AvailableMeals = props =>{
 
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchMealsHandler = async () => {
     try {
@@ -53,9 +25,8 @@ const AvailableMeals = props =>{
           price: data[key].price
         })
       }
-      console.log(loadedMeals);
       setMeals(loadedMeals);
-
+      setIsLoading(false);
     } catch(error) {
       console.log(error.message);
     }
@@ -64,6 +35,12 @@ const AvailableMeals = props =>{
   useEffect(()=>{
     fetchMealsHandler();
   }, []);
+
+  if(isLoading) {
+    return <section>
+      <p>Is loading...</p>
+    </section>
+  }
 
     const mealsList = meals.map((meal)=>{
         return <MealItem 
