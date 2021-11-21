@@ -13,7 +13,7 @@ const AvailableMeals = props =>{
 
   const fetchMeals = async () => {
     // try {
-      const response = await fetch("https://react-food-order-app-f946a-default-rtdb.europe-west1.firebasedatabase.app/meals.jsons");
+      const response = await fetch("https://react-food-order-app-f946a-default-rtdb.europe-west1.firebasedatabase.app/meals.json");
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
@@ -52,7 +52,7 @@ const AvailableMeals = props =>{
 
   if(httpError) {
     console.log(errorMessage)
-    return <section>
+    return <section className={styles["meals-error"]}>
       <p>{httpError}</p>
     </section>
   }
