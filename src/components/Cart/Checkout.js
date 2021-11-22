@@ -20,7 +20,7 @@ const Checkout = (props) => {
   const confirmHandler = (event) => {
     event.preventDefault();
     const nameEntered = nameInputRef.current.value;
-    const streetEntered = cityInputRef.current.value;
+    const streetEntered = streetInputRef.current.value;
     const postalCodeEntered = postalCodeInputRef.current.value;
     const cityEntered = cityInputRef.current.value;
 
@@ -46,6 +46,13 @@ const Checkout = (props) => {
       return;
     }
 
+    props.onSubmitOrder({
+      name: nameEntered,
+      street: streetEntered,
+      postalCode: postalCodeEntered,
+      city: cityEntered,
+    });
+
     console.log(formInputsValidity);
   };
 
@@ -61,8 +68,6 @@ const Checkout = (props) => {
   const classControlCity = `${styles.control} ${
     formInputsValidity.city ? "" : styles.invalid
   }`;
-
-  
 
   return (
     <form onSubmit={confirmHandler}>
