@@ -8,7 +8,7 @@ const confirmHandler = event => {
 
 }
 
- return <form onSubmit={confirmHandler}>
+ return <form  onSubmit={confirmHandler}>
      <div className={styles.control}>
          <label htmlFor='name'>Your Name</label>
          <input type='text' id='name' />
@@ -25,8 +25,10 @@ const confirmHandler = event => {
          <label htmlFor='city'>City</label>
          <input type='text' id='city' />
      </div>
+    <div className={styles.actions}>
      <button type='button' onClick={props.onCancel}>Cancel</button>
      <button>Confirm</button>
+     </div>
  </form>
 }
 
